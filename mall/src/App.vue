@@ -5,6 +5,7 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
+    <p>这是最新修改的</p>
   </div>
 </template>
 
