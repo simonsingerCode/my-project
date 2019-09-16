@@ -35,10 +35,10 @@
    4. **__filename：** 是当前文件所在的绝对路径,多了模块的名称,例如： E:\mySelf-worker\NodeJs\note\03-nodejs-git\test.js
 
 ## 二、node 中的内置模块 fs
-  ### fs内置模块
-  1. `fs内置模块` 实现 **I/O**操作 下面的这些方法都是异步操作
+  1. `fs内置模块`
+    - 实现 **I/O**操作 下面的这些方法都是异步操作。
     - fs.mkdir(path, [model], callback)/fs.mkdirSync(path, [model]) 创建文件夹,有 sync 的是同步创建，反之，没有的则是异步
-    - fs.readdir(path, 'utf8', callback)   读取文件目录中的内容 **'utf8'设置读取文件字符编码格式;如果没有'utf8'则是buffer格式的数据**
+    - fs.readdir(path, 'utf8', callback) 读取文件目录中的内容 **'utf8'设置读取文件字符编码格式;如果没有'utf8'则是buffer格式的数据**
     - fs.rmdir()  删除文件夹 **删除文件夹必须保证文件夹是空的**
     - fs.unlink()  删除文件
     - fs.readFile()  读取文件中的内容 **'utf8'同上**
