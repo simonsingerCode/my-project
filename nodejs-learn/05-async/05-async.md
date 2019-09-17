@@ -72,8 +72,9 @@
     // 状态为 4 的时候主栈空闲 ==> 一次都不打印
   ```
   ### 5. Promise() 是如何异步的
-    - **resolve 的作用：管控 then 里面的方法的执行；可以理解为 then 是往容器里存放方法，resolve 的作用就是用来拿取容器中的方法来执行**
-    - **Promise 的原理：**
+    1. **resolve 的作用：管控 then 里面的方法的执行；可以理解为 then 是往容器里存放方法，resolve 的作用就是用来拿取容器中的方法来执行**
+    2. **Promise 的原理：**
+
   > Promise 并不是完全的同步，挡在 excutor 中执行 resolve 或者 reject 的时候，此时是异步操作，会先执行 then/catch 等，当主栈完成后，才会再去调用 resolve/reject 把存放的方法执行
 
   ### 6. async/await ES7中新增的对 Promise 操作的新语法：async/await(使用 await 必须保证当前方法是基于 async 修饰的才可以)
@@ -103,6 +104,7 @@
       3. 事件绑定
       4. ajax
       5. 回调函数
+    ---
     2. **微任务 micro task**
       1. Promise(async/await)
       2. process.nextTick
@@ -131,3 +133,11 @@
   });
   console.log('script end');
   ```
+
+### 7. node 中独有的操作 API
+  1. **setImmediate** 也是定时器，但是不设置时间，但是它也是异步编程(**宏任务**), 会在其他所有定时器之前执行
+  2. **process.nextTick()** 把当前任务放到主栈最后进行(**当主栈执行完，先执行 process.nextTick，再到等待队列中找**)
+  3. **process.env.NODE_ENV 全局环境变量** 在电脑当中能够配置环境信息
+    - 用途：
+      1. 真实项目中，基于 webpack 打包配置的时候，往往需要区分不同环境下的不同操作，例如有：开发环境、测试环境、生产环境...我们**一般都是基于环境变量来区分打包配置的**
+
