@@ -102,7 +102,11 @@
         - 第二个参数 {'content-type': 'text/plain; charset=utf-8;'}
 
 ## 三、创建静态资源服务器
-  1. 首先，我们在我们的服务器根目录下，有一个静态资源 static 文件夹
+  1. 我们创建的web服务的服务主要有两种：
+    **1. 静态资源文件的web服务处理** 请求的地址中后后缀名
+    **2. 对应API接口的数据请求处理** 没有后缀名
+
+  2. 首先，我们在我们的服务器根目录下，有一个静态资源 static 文件夹
     - 服务器上有一堆代码，这些代码有可能有服务器端的代码，也有可能有 客户端的程序代码，而客户端程序代码我们一般都放到 static 文件夹中
     - 在后台服务器这里，文件夹 static 中的所有东西，都是有服务器返回给客户端，有客户端负责渲染解析的。
     ```JavaScript
@@ -113,29 +117,184 @@
       都是需要在服务器端基于 node 执行的代码(属于后端项目： 一般只有 js 代码)
 
     ```
-    - 这时候，客户端请求资源文件，服务器端都是到 static 文件夹中进行读取，也是根据客户端请求路径名读取的，服务器端基于FS 读取文件中内容的时候，直接加上 `./static` 即可
+    - 这时候，客户端请求资源文件，服务器端都是到 static 文件夹中进行读取，
+      也是根据客户端请求路径名读取的，服务器端基于FS 读取文件中内容的时候，直接加上 `./static` 即可
     - { methods, headers: requestHeaders } = req; 这里用到结构赋值，加上重命名
+
+  3. API 接口的请求处理
+    - GET 请求方式的处理
+    - POST 请求方式的处理
+      1. axios 默认请求主体传递给服务器的是 RAW 格式的：*'{"name":"xxx", ...}';*
+      2. 真实项目中我们和服务器约定的传输格式应该是 *x-www-url-encodeed: "name=xxx&..."*
+      3. 这个时候，就需要添加一个请求处理机制
+      ```JavaScript
+      axios.defaults.transform.request = data=>{
+        // 基于这个请求拦截器可以把 POST 和PUT 等传递给服务器的请求主体(data)内容格式进行格式化处理
+        // data 就是配置的请求主体对象
+        let str = '';
+        if(data && typeof data === 'object'){
+          for(let key in data){
+            if(data.hasOwnProperty(key)){
+              str += `${key} = ${data[key]}&`;
+            }
+          }
+          data = str.substring(0, str.length-1);
+        }
+        return data;
+      }
+      ```
+
+  4. js中的同步异步处理
+
+
+  5. 后台处理中最重要的是：逻辑
+    - 业务逻辑
+    - 编程逻辑
+
+---
+  ##### 实例代码
     ```javascript
       const http = require('http'), url = require('url'), path = require('path'), fs = require('fs');
-      let { readFile } = require('./utils/fsPromise');
+      let { readFile,writeFile } = require('./utils/fsPromise'), mime = require('mime'), qs = require('qs');
+
+      // 公共方法
+      // 返回 响应结果
+      let responseResult = function (res, returnVal) {
+        res.readHead(200, {
+          'content-type': 'application/json; charset=utf-8;'
+        }); // 注意
+        res.end(JSON.stringify(returnVal));
+      };
+
+      // 读取 user.json 文件中的数据
+      let readUser = function (result) {
+        return readFile(`./json/suer.json`).then(result => {
+          return JSON.parse(result);
+        })
+      };
+
+      // 读取 vote.json 中的数据
+      let readVote = function (result) {
+        return readFile(`./json/vote.json`).then(result => {
+          return JSON.parse(result);
+        });
+      };
 
       // 1. 创建web服务器，并设置端口号 0~65535之间
       let port = 8000;
       let handle = function handle(req, res) {
         let { method, headers:requestHeaders } = req,
-          { pathname, query } = url.parse(req.url, true);
+          { pathName, query } = url.parse(req.url, true),
+          pathReg = /\.([a-z0-9])$/i;
 
-        readFile(`./static${pathname}`).then(result => {
-          // 读取成功
-          res.writeHead(200); // 因为读取的文件类型不确定，这里暂不重新设置响应头
-          res.end(result);
-        }).catch(error => {
+        // 静态资源的文件处理
+        if (pathReg.test(pathName)) {
+          readFile(`./static${pathname}`).then(result => {
+            // 读取成功,根据请求资源文件的类型，设置响应内容的 MIME 类型
+            let suffix = pathReg.exec(suffix)[1];
+            res.writeHead(200, {
+              'content-type': `${mime.getType(pathReg)}; charset=utf-8;`
+            });
+            res.end(result);
+          }).catch(error => {
+            // 读取失败：最可能由于文件不存在而读取失败(也就是客户端请求的地址是错误的)
+            res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8;' });
+            res.end('Not found...');
+            console.log(error);
+          });
+          return;
+        }
 
-          // 读取失败：最可能由于文件不存在而读取失败(也就是客户端请求的地址是错误的)
-          res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8;' });
-          res.end('Not found...');
-          console.log(error);
-        });
+        // API 接口请求处理
+
+        // getUser 根据传递的用户ID获取指定的用户信息
+        if (pathName === '/getUser' && method === 'GET') {
+          // 把数据找到并且返回
+          // url中问号后面传递的信息都在query中存储这
+          let { userId = 0 } = query,
+            returnVal = { code: 1, message: 'no match any data!', data: null };
+
+          /*
+          readUser().then(result => {
+            let data = result.find(item => parseFloat(item['id']) === parseFloat(userId));
+            if (data) {
+              returnVal = { code: 0, message: 'ok', data };
+              responseResult(res, returnVal);
+              return;
+            }
+            throw new Error(''); // 目的是：没有数据的时候，执行catch 中的操作，这样只需要让 then 方法中有异常信息即可
+          }).catch(error => responseResult(res, returnVal));
+          */
+
+          // 另一种写法
+          readUser().then(result => {
+            let data = result.find(item => parseFloat(item['id']) === parseFloat(userId));
+            data ? returnVal = { code: 0, message: 'No!', data } : null;
+          }).finally(() => responseResult(res, returnVal));
+          return;
+        }
+
+        // REGIDTER：注册用户
+        if (pathName === '/register' && method === 'POST') {
+
+          // => 1. 接收客户端传过来的内容
+          let pass = ``;
+          req.on('data', chunk => {
+            //  正在接收请求主体内容，可能会被触发很多次; chunk 接收的都是本次接收得到的 buffer 格式的数据
+            pass += chunk;
+          });
+
+          req.on('end', () => {
+            // 已经把请求主体内容接收完成了
+            // pass 是一个 urlencodeed 格式的字符串，需要解析为对象
+            pass = qs.parse(pass);
+            readUser().then(result => {
+              // => format pass
+              let maxId = result.length <= 0 ? 0 : parseFloat(reault[result.length - 1]['id']);
+              // password 二级加密
+              pass.password = pass.password.substr(4, 24).split('').reverse().join('');
+              let newData = {
+                id: maxId+1,
+                name: '',
+                picture: `img/${pass.sex != 0 ? `woman` : `man`}.png`,
+                phone: "",
+                sex: 0,
+                password: "",
+                bio: "",
+                time: new Date().getTime(),
+                isMatch: 0,
+                matchId: '000',
+                slogan: "",
+                voteNum: 0,
+                ...pass
+              };
+
+              // => 把newData 追加到result 的末尾; 然后把最新的结果重新写入文件
+              result.push(newData);
+              return writeFile('./json/user.json', result);
+            }).then(result => {
+              responseResult(res, {
+                code: 0,
+                message: 'ok'
+              })
+            }).catch(error => {
+              responseResult(res, {
+                code: 1,
+                message: 'no'
+              })
+            });
+          })
+          // 2. 把数据库中的所有的 user 都拿到
+          // 3. 把接收到的内容和数据库中的 user 合并在一起
+          // 4. 把最新的重新写进去
+
+          return;
+        }
+
+        // 请求的都不是以上接口,直接返回404即可
+        res.writeHead(404);
+        res.end('');
+
       };
 
       http.createServer(handle).listen(port, () => {
