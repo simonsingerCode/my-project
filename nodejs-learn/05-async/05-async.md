@@ -77,57 +77,57 @@
   > Promise 并不是完全的同步，挡在 excutor 中执行 resolve 或者 reject 的时候，此时是异步操作，会先执行 then/catch 等，当主栈完成后，才会再去调用 resolve/reject 把存放的方法执行
 
   ### 6. async/await ES7中新增的对 Promise 操作的新语法：async/await(使用 await 必须保证当前方法是基于 async 修饰的才可以)
-    ```javaScript
-    function AA() {
-      return new Promise((resolve,reject) => {
-        setTimeout(() => {
-          Math.random() < 0.5 ? reject() : resolve();
-        }, 0);
-      })
-    }
-    async function fn() {
-      // 先把AA执行，等待AA中的 promise完成(不论成功或者失败)，把最后的处理结果获取到之后赋值给 res，拿到后在执行后面的代码
-      let res = await AA();
-    }
-    ```
-    - #### await 特点：
-        1. 先执行 await 后面的函数；
-        2. 它会暂时跳出当前正在执行的函数，也就是 await 后面的代码暂时先不执行(把后面的代码从主栈中移出，放到等待区域中)；
-        3. 主栈暂时空闲
-        4. 当主栈中的其他任务完成，并且 await 后面的函数返回结果回来之后，再把 await 之后的所有代码重新但回到主栈区中执行
+  ```javaScript
+  function AA() {
+    return new Promise((resolve,reject) => {
+      setTimeout(() => {
+        Math.random() < 0.5 ? reject() : resolve();
+      }, 0);
+    })
+  }
+  async function fn() {
+    // 先把AA执行，等待AA中的 promise完成(不论成功或者失败)，把最后的处理结果获取到之后赋值给 res，拿到后在执行后面的代码
+    let res = await AA();
+  }
+  ```
+  #### 1. await 特点：
+    1. 先执行 await 后面的函数；
+    2. 它会暂时跳出当前正在执行的函数，也就是 await 后面的代码暂时先不执行(把后面的代码从主栈中移出，放到等待区域中)；
+    3. 主栈暂时空闲
+    4. 当主栈中的其他任务完成，并且 await 后面的函数返回结果回来之后，再把 await 之后的所有代码重新但回到主栈区中执行
 
-    - #### 异步编程的分类
-        1. **宏任务 marco task**
-          1. 定时器
-          2. node中的 fs
-          3. 事件绑定
-          4. ajax
-          5. 回调函数
-        2. **微任务 micro task**
-          1. Promise(async/await)
-          2. process.nextTick
+  #### 2. 异步编程的分类
+    1. **宏任务 marco task**
+      1. 定时器
+      2. node中的 fs
+      3. 事件绑定
+      4. ajax
+      5. 回调函数
+    2. **微任务 micro task**
+      1. Promise(async/await)
+      2. process.nextTick
 
-        > 执行顺序优先级： sync同步 --> micro task(微任务) --> macro task(宏任务)
+    > 执行顺序优先级： sync同步 --> micro task(微任务) --> macro task(宏任务)
 
-        ```javaScript
-        async function async1() {
-          console.log('async1 start');
-          await async2();
-          console.log('async1 end');
-        }
-        async function async2() {
-          console.log('async2');
-        }
-        console.log('script start');
-        setTimeout(() => {
-          console.log('setTimeout');
-        }, 0);
-        async1();
-        new Promise((resolve) => {
-          console.log('promise1');
-          resolve();
-        }).then(() => {
-          console.log('promise2');
-        });
-        console.log('script end');
-        ```
+  ```javaScript
+  async function async1() {
+    console.log('async1 start');
+    await async2();
+    console.log('async1 end');
+  }
+  async function async2() {
+    console.log('async2');
+  }
+  console.log('script start');
+  setTimeout(() => {
+    console.log('setTimeout');
+  }, 0);
+  async1();
+  new Promise((resolve) => {
+    console.log('promise1');
+    resolve();
+  }).then(() => {
+    console.log('promise2');
+  });
+  console.log('script end');
+  ```
