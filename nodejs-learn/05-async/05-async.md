@@ -98,18 +98,17 @@
     4. 当主栈中的其他任务完成，并且 await 后面的函数返回结果回来之后，再把 await 之后的所有代码重新但回到主栈区中执行
 
   #### 2. 异步编程的分类
-    1. **宏任务 marco task**
+    1. 宏任务 marco task
       1. 定时器
       2. node中的 fs
       3. 事件绑定
       4. ajax
       5. 回调函数
-    ---
-    2. **微任务 micro task**
+    2. 微任务 micro task
       1. Promise(async/await)
       2. process.nextTick
 
-    > 执行顺序优先级： sync同步 --> micro task(微任务) --> macro task(宏任务)
+  > 执行顺序优先级： sync同步 --> micro task(微任务) --> macro task(宏任务)
 
   ```javaScript
   async function async1() {
