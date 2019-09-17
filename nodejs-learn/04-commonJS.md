@@ -31,29 +31,29 @@
   ### 5. 案例：
    1. A/B/C 三个模块  A中有一个sum方法：实现任意数求和；B中有一个avg方法：实现任意数求平均数；C中调去B中的avg，实现 12,23,34,45,56,67,78,89，求平均数
    2. **require('./xxx')** 或者 ../xxx 再或者 /xxx 这种自己指定路径的模式，都是为了导入自定义的模块，想要导入自定义的模块，必须加路径。
-   3. **__dirname：** 是当前模块所在的绝对路径。如：E:\mySelf-worker\NodeJs\note\03-nodejs-git
-   4. **__filename：** 是当前文件所在的绝对路径,多了模块的名称,例如： E:\mySelf-worker\NodeJs\note\03-nodejs-git\test.js
 
-## 二、node 中的内置模块 fs
-  1. `fs内置模块`
-    - 实现 **I/O**操作 下面的这些方法都是异步操作。
-    - fs.mkdir(path, [model], callback)/fs.mkdirSync(path, [model]) 创建文件夹,有 sync 的是同步创建，反之，没有的则是异步
-    - fs.readdir(path, 'utf8', callback) 读取文件目录中的内容 **'utf8'设置读取文件字符编码格式;如果没有'utf8'则是buffer格式的数据**
-    - fs.rmdir()  删除文件夹 **删除文件夹必须保证文件夹是空的**
-    - fs.unlink()  删除文件
-    - fs.readFile()  读取文件中的内容 **'utf8'同上**
-    - fs.writeFile()  向文件中写入内容 **(覆盖写入：写入的新内容会替换原有的内容)**
-    - fs.appendFile()  追加写入内容，原有内容还在
-    - fs.copyFile()  拷贝文件到新的目录下
-    - **`注意事项：`**
+## 二、node 中的内置模块
+  ### 1. `fs内置模块`
+  - 实现 **I/O**操作 下面的这些方法都是异步操作。
+  - fs.mkdir(path, [model], callback)/fs.mkdirSync(path, [model]) 创建文件夹,有 sync 的是同步创建，反之，没有的则是异步
+  - fs.readdir(path, 'utf8', callback) 读取文件目录中的内容 **'utf8'设置读取文件字符编码格式;如果没有'utf8'则是buffer格式的数据**
+  - fs.rmdir()  删除文件夹 **删除文件夹必须保证文件夹是空的**
+  - fs.unlink()  删除文件
+  - fs.readFile()  读取文件中的内容 **'utf8'同上**
+  - fs.writeFile()  向文件中写入内容 **(覆盖写入：写入的新内容会替换原有的内容)**
+  - fs.appendFile()  追加写入内容，原有内容还在
+  - fs.copyFile()  拷贝文件到新的目录下
+  - **`注意事项：`**
 ---
 
-  2. `path内置模块`
-    - path.resolve() 返回当前模块的绝对地址(不包含模块名)， __dirname 是当前模块所在的绝对路径
-      - path.resolve(__dirname, 'less/tt') 的作用是把 `less/tt` 的相对路径拼接到 __dirname这个绝对路径的后面，形成一个完整的路径
-      - path.resolve(__dirname, `${__dirname}/less/tt`) 如果两个路径都是绝对路径，那么只会保留后面的那个绝对路径，前面的就不存在了
-      - `注意：`
-        - 这里的 __dirname 返回的路径是 **当前__dirname所在模块绝对路径(和模块中的方法在哪里执行是没有关系的)**
-        - path.resolve() 返回路径是 **调用执行模块所在的绝对路径**
+  ### 2. `path内置模块`
+  - path.resolve() 返回当前模块的绝对地址(不包含模块名)， __dirname 是当前模块所在的绝对路径
+    - path.resolve(__dirname, 'less/tt') 的作用是把 `less/tt` 的相对路径拼接到 __dirname这个绝对路径的后面，形成一个完整的路径
+    - path.resolve(__dirname, `${__dirname}/less/tt`) 如果两个路径都是绝对路径，那么只会保留后面的那个绝对路径，前面的就不存在了
+    - `注意：`
+      - 这里的 __dirname 返回的路径是 **当前__dirname所在模块绝对路径(和模块中的方法在哪里执行是没有关系的)**
+      - path.resolve() 返回路径是 **调用执行模块所在的绝对路径**
+    - **__dirname：** 是当前模块所在的绝对路径。如：E:\mySelf-worker\NodeJs\note\03-nodejs-git
+    - **__filename：** 是当前文件所在的绝对路径,多了模块的名称,例如： E:\mySelf-worker\NodeJs\note\03-nodejs-git\test.js
 
 ## 三、
