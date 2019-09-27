@@ -1,7 +1,3 @@
-# git create repositorys
-  > simonsingerCode {hanqingyi1989@163.com; simon198909165}
----
-
 ## git 终端常用快捷键
   1. 使用 ctrl+L 清屏
   2. `ll` 文件列表
