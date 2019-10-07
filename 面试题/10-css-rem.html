@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>css-rem适配问题</title>
+  <script src="./11-js综合面试题.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #box {
+      width: 0.5rem;
+      height: 0.5rem;
+      background: red;
+    }
+
+    /*
+    html 根元素的字体大小，设置称为我们最终的屏幕区的宽
+     */
+  </style>
+</head>
+<body>
+  <div id="box"></div>
+</body>
+</html>
+<script>
+  window.onload = function(){
+    // 获取整个屏幕区的宽
+    var width = document.documentElement.clientWidth;
+    console.log(width);
+    // 获取HTML
+    var htmlNode = document.querySelector('html');
+
+    // 设置字体大小
+    htmlNode.style.fontSize = width + 'px';
+
+  };
+</script>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>作用域和值类型</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+
+  var num1 = 55;
+  var num2 = 66;
+
+  function f1(num,num1){
+    num = 100;
+    num1 = 100;
+    num2 = 100;
+    console.log(num);
+    console.log(num1);
+    console.log(num2);
+  }
+  f1(num1,num2);
+  console.log(num1);
+  console.log(num2);
+  console.log(num);
+
+</script>

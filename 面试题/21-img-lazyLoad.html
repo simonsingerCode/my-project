@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>实现图片的懒加载</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    #imgBox {
+      margin: 1000px auto;
+      width: 800px;
+      height: 160px;
+      overflow: hidden;
+      background: #bbb
+    }
+
+    #imgBox img {
+      display: none;
+      width: 100%;
+    }
+  </style>
+  <script src="../libs/jquery_v3.4.1.js"></script>
+</head>
+<body>
+  <div id="imgBox">
+    <img src="" alt="" data-img="http://www.zhufengpeixun.cn/main/img/banner10.png">
+  </div>
+</body>
+</html>
+<!-- <script src="./21-delayImg.js"></script> -->
+<script src="./22-unique.js"></script>

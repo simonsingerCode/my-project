@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>使用flex实现水平垂直方向居中</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #wrap {
+      width: 500px;
+      height: 500px;
+      background-color: grey;
+
+      /* 传统方法通用的 */
+      /* position: relative; */
+
+
+      /* 新版本 */
+      /* display: flex;
+      justify-content: center;
+      align-items: center; */
+
+
+      /* 老版本 */
+      /* display: -webkit-box;
+      -webkit-box-pack: center;
+      -webkit-box-align: center; */
+    }
+
+    #wrap .box {
+      width: 200px;
+      height: 200px;
+      background: pink;
+
+      /* 传统方法一 */
+      /* position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto; */
+
+
+      /* 传统方法二 */
+      /* position: absolute;
+      top:50%;
+      left: 50%;
+      transform: translate(-50%,-50%); */
+
+
+
+
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <div class="box"></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>值类型和引用类型的传递</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+
+  function Person(name,age,salary){
+    this.name = name;
+    this.age = age;
+    this.salary = salary;
+  }
+
+  function f1(person){
+    person.name = 'ls';
+    person = new Person('aa',18, 10);
+  }
+
+  var p = new Person('zs',18,1000);
+  console.log(p.name);
+  f1(p);
+  console.log(p.name);
+</script>
