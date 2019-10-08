@@ -134,22 +134,26 @@
 // console.log(arr);
 
 
-var obj = { q: 1, w: [{ e: 1 }, 2], r: { t: '123' } };
-function deepClone(obj) {
-  if (!obj || (typeof obj !== 'object')) {
-    return;
-  }
+// var obj = { q: 1, w: [{ e: 1 }, 2], r: { t: '123' } };
+// function deepClone(obj) {
+//   if (!obj || (typeof obj !== 'object')) {
+//     return;
+//   }
+//   var newObj = Object.prototype.toString.call(obj) === '[object Array]' ? [] : {};
+//   for (let key in obj) {
+//     if (typeof obj[key] == 'object') {
+//       newObj[key] = deepClone(obj[key]);
+//     } else {
+//       newObj[key] = obj[key];
+//     }
+//   }
+//   return newObj;
+// }
+// console.log(deepClone(obj) == obj);;
+// console.log(deepClone(obj));
 
-  var newObj = Object.prototype.toString.call(obj) === '[object Array]' ? [] : {};
-  for (let key in obj) {
-    if (typeof obj[key] == 'object') {
-      newObj[key] = deepClone(obj[key]);
-    } else {
-      newObj[key] = obj[key];
-    }
-  }
-  return newObj;
-}
 
-console.log(deepClone(obj) == obj);;
-console.log(deepClone(obj));
+//1、创造一个vuex实例
+//2、把创造的实例放到根实例中
+//使用this.$store.state
+
