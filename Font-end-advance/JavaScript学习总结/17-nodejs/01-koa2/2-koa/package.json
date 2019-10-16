@@ -1,0 +1,18 @@
+{
+  "name": "hello-koa",
+  "version": "1.0.0",
+  "description": "koa study",
+  "main": "03-views.js",
+  "scripts": {
+    "start": "node 03-views.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "csxiaoyao",
+  "license": "ISC",
+  "devDependencies": {
+    "koa": "^2.5.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.4.0",
+    "nunjucks": "^3.1.2"
+  }
+}

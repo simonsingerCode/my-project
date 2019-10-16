@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+<script>
+
+//需求：交换两个变量（数值型）且不能用中间值
+//求两个数的和，然后减去其中一个交换给另一个
+    
+//1.求和。
+var a = 10;
+var b = 20;
+console.log("a:"+a+"---"+"b:"+b);
+a = a + b;
+//2.利用和减去其中一个交换给本身变量
+b = a - b;
+//3.减去刚才的一个交换给另一个
+a = a - b;
+console.log("a:"+a+"---"+"b:"+b);
+
+</script>
+</body>
+</html>

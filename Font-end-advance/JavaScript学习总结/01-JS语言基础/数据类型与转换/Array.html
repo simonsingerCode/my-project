@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+<script type="text/javascript">
+
+/**
+ * Array数组对象
+ */
+/**
+ * (一) 创建数组的方式
+ */
+// 方式1:var 变量名 = new Array(); //创建一个长度为0的数组
+// 方式2:var 变量名 = new Array(长度) //创建一个指定长度的数组对象
+// 方式3:var 变量名 = new Array("元素1","元素2"...) //创建指定元素的数组对象
+// 方式4:var 变量名 = ["元素1","元素2"...];
+// 字面量定义
+var array1 = [1,2,3];
+var array2 = [];
+// 对象创建
+var arr1 = new Array(); //空数组
+var arr2 = new Array("关羽","张飞","刘备");
+var arr3 = new Array(1,2,3);
+
+// 【概念】：浅拷贝、深拷贝
+// 浅拷贝，复制的是引用
+// 深拷贝，遍历数组赋值，复制的是值
+
+// 在javascript中数组长度可变
+var arr = new Array(3); //创建了一个长度为【0】的数组对象。
+arr[100] = 10;
+document.write("arr长度："+arr.length+"<br/>");//101	
+var arr = new Array("sun1","sun2","sun3");
+arr = ["sun4","sun5","sun6","sun7"];
+document.write("arr长度："+arr.length+"<br/>");//4
+
+/**
+ * 常用方法
+ */
+// (二) 存取函数
+// 查找元素：indexOf()、lastIndexOf()
+// 字符串-->数组：split()
+// 数组-->字符串：join()、toString()
+// 已有数组-->新数组：concat()、splice()
+
+// (三) 可变函数，变异函数会改变原数组
+// 添加元素：push()、unshift()
+// 删除元素：pop()、shift()
+// 中间位置添加删除元素：splice()
+// 排序：reverse()、sort()
+
+// (四) 替换数组，返回一个新数组
+// filter(), concat(), slice()
+
+// (五) 迭代器方法
+// 不生成新数组：forEach()、every()、some()、reduce()、reduceRight()
+// 生成新数组：map()、filter()
+
+//【length】:返回数组长度
+var length = arr.length
+//【sort】:排序，要传入排序的方法
+arr.sort(sortNumber);
+function sortNumber(num1,num2){
+	return num1-num2;//升序
+}
+document.writeln(arr);//sun4,sun5,sun6,sun7
+//【slice】:指定数组的开始索引值与结束索引值截取数组的元素，并且返回子数组
+var subArr = arr.slice(1,2);//包左不包右
+document.writeln(subArr);//sun5
+//【reverse】:翻转数组元素
+arr.reverse();
+document.writeln(arr);//sun7,sun6,sun5,sun4
+var arrNew = arr.reverse();
+document.writeln(arrNew);//sun4,sun5,sun6,sun7
+//【join】:使用指定的分隔符把数组中的元素拼装成一个字符串返回
+var string = arr.join(",");
+document.writeln(arr);//sun7,sun6,sun5,sun4
+//【concat】:把arr1与arr2的数组元素组成一个新的数组返回
+var arrTemp = [1,2,3];
+var arrConcat = arr.concat(arrTemp);
+document.writeln(arrConcat);//sun4,sun5,sun6,sun7,1,2,3
+//【push】:将新元素添加到一个数组中，并返回数组的新长度值
+var length = arr.push("sunshine"); 
+document.writeln(length);//5
+//【pop】:移除数组中的最后一个元素并返回该元素
+var data = arr.pop();
+document.writeln(data);//sunshine
+//【unshift】:向数组的开头添加一个或更多元素，并返回新的长度
+var length = arr.unshift("sunshine"); 
+document.writeln(length);//5
+//【shift】:移除数组中第一个元素，并且返回
+var data = arr.shift();
+document.writeln(data);//sunshine
+//【splice】:第一个参数是开始删除元素的索引值，第二参数是删除元素的个数，往后的数据是插入的元素
+arr.splice(1,1,"张三","李四","王五");
+document.writeln(arr);//sun7,张三,李四,王五,sun5,sun4
+//【indexOf】:从前往后查元素索引，找到一个后返回
+document.writeln(arr.indexOf("sun7"));//5 第6个元素
+document.writeln(arr.indexOf("sun"));//-1 找不到元素
+//【lastIndexOf】:从后往前查元素索引，找到一个后返回
+document.writeln(arr.indexOf("sun7"));//5 第6个元素
+document.writeln(arr.indexOf("sun"));//-1 找不到元素
+
+//【清空数组】
+var arr = [1,2,3];
+arr.splice(0);//普通数组，方法1
+arr = [];//普通数组，方法2
+arr.length = 0;//普通数组，方法3
+console.log(arr);//[]
+function fun(name,age){
+	// arguments.splice(0);//伪数组没有splice方法，报错
+	// arguments.length = 0;//无效
+	arguments = [];//伪数组清空方法
+	console.log(arguments);//[]
+}
+fun("csxiaoyao",25);
+
+//【数组遍历】
+var arr = ["关羽","张飞","诸葛亮","马超","黄忠"];
+//【every()】: 返回值为boolean类型，决定是否继续执行，参数为一个回调函数
+var bool = arr.every(function (element,index,array) {//(当前元素、索引、当前整个数组)
+	if(element.length>2){//当前元素超过两个字停止遍历
+		return false;
+	}
+	console.log(element);//关羽 张飞
+	console.log(index);//0 1
+	console.log(array);//["关羽", "张飞", "诸葛亮", "马超", "黄忠"] ["csxiaoyao", "张飞", "诸葛亮", "马超", "黄忠"]
+	element = "csxiaoyao";
+	array[index] = element;
+	return true;
+});
+alert(bool);//false
+//【filter()】: 返回新数组，全部遍历一遍，return为true的数组
+var arr1 = arr.filter(function (ele,index,array) {
+	if(ele.length>2){//返回超过两个字的元素
+		return true;
+	}
+	return false;
+});
+console.log(arr1);//["诸葛亮"]
+//【forEach()】: 遍历数组(无返回值，纯操作数组中的元素)
+var str = "";
+arr.forEach(function (ele,index,array) {
+	str+=ele;
+});
+console.log(str);//关羽张飞诸葛亮马超黄忠
+//【map()】: 有返回值，返回内容添加到新数组中
+var arr2 = arr.map(function (ele,index,array) {
+	return (index+1)+":"+ele;
+})
+console.log(arr2);//["1:关羽", "2:张飞", "3:诸葛亮", "4:马超", "5:黄忠"]
+//【some()】: 有返回值，函数结果有一个为true，本方法结果也为true
+var flag = arr.some(function (ele,index,array) {
+	if(ele.length>2){
+		return true;
+	}
+	return false;
+})
+console.log(flag);//true
+//【reduce()】: 接受一个函数、返回一个值
+function add(runningTotal, currentValue){
+	return runningTotal + currentValue;
+}
+function concat(accumulatedString, item){
+	return accumulatedString + item;
+}
+var nums = [1,2,3,4,5,6,7,8,9,10];
+var sum = nums.reduce(add);// 累加
+var words = ["sun","shine"," ","studio"];
+var sentence = words.reduce(concat);// 拼接字符串
+console.log(sum);//55
+console.log(sentence);// sunshine studio
+//【reduceRight()】: 接受一个函数、返回一个值
+var sentence = words.reduceRight(concat);// 拼接字符串
+console.log(sentence);// studio shinesun
+
+/**
+ * (五) 二维和多维数组
+ * 定义 [[],[],[]]
+ * 访问 [][]
+ */
+
+/**
+ * (～) 是否改变原数组总结
+ */
+// 【改变】：
+// pop：删除最后一个并返回，改变原数组
+// push：向数组末尾添加元素，并返回新的长度，改变原数组
+// shift：将第一个元素删除并且返回，空即为undefined，改变原数组
+// unshift：向数组开头添加元素，并返回新的长度，改变原数组
+// reverse：颠倒数组顺序，改变原数组
+// splice:splice(start,length,item)新增删除替换数组元素，返回被删除数组，无删除则不返回，改变原数组
+// sort：对数组排序，改变原数组
+// 【不变】：
+// concat：连接多个数组，返回新的数组，不改变原数组
+// join：将数组中所有元素以参数作为分隔符放入一个字符串，不改变原数组
+// slice：slice(start,end)，返回选定元素，不改变原数组
+
+/**
+ * 其他
+ */
+console.log(++[[]][+[]]+[+[]]); // 10
+
+/**
+ * 删除数组中的指定元素（此处为2）
+ */
+// 方法1: 删除后调整 i 的值
+(function() {
+    var arr = [1, 2, 2, 3, 4, 5];
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == 2) {
+            // 删除元素后调整i的值
+            arr.splice(i--, 1);
+        }
+    }
+    console.log(arr);
+})();
+// 方法2: 从后向前删除
+(function() {
+    var arr = [1, 2, 2, 3, 4, 5];
+    for (var i = arr.length - 1; i >= 0; i--) {
+        if (arr[i] == 2) {
+            arr.splice(i, 1);
+        }
+    }
+    console.log(arr);
+})();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CALL 继承</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+  function A(x) {
+    this.x = x;
+  }
+  A.prototype.getX = function () {
+    console.log(this.x);
+  };
+
+  function B(y) {
+    // => 这里面的 this 是 B 的实例
+    A.call(this, 200);
+    this.y = y;
+  }
+  B.prototype.getY = function () {
+    console.log(this.y);
+  };
+
+  let b1 = new B(100);
+  b1.y;
+  b1.x;
+
+</script>

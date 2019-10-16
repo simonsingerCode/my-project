@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ES6中的继承</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+  // => ES6中基于 class 创造出来的类，不能当作普通函数执行
+  class A {
+    constructor(x){
+      this.x = x;
+    }
+    getX(){
+      console.log(this.x);
+    }
+  }
+
+  // => ES6中的继承  class child extends parent 子类继承父类，同时在 constructor 方法中使用 super();  操作后的结果 B.prototype.__proto__ = A.prototype;
+  class B extends A {
+    // => 如果不写 constructor，浏览器会自己默认创建 constructor 并执行
+    // => constructor(...args){super(...args)}
+    constructor(y){
+      super(200); // SUPER 相当于 call 继承 A.call(this, 200)
+      this.y = y;
+    }
+    getY(){
+      console.log(this.y);
+    }
+  }
+
+  let b1 = new B(100);
+  console.log(b1);
+
+</script>

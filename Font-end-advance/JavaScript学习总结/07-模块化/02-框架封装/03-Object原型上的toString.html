@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        /*
+        * Object.prototype.toString
+        * 作用：根据内部的this返回一个类似于这样的字符串'[object constructorName]'
+        * 这个方法有个缺点，不能获取用户自定义对象的具体类型，只能获取内置对象的类型
+        * */
+
+        // 测试
+        console.log(Object.prototype.toString.call([]));
+        console.log(Object.prototype.toString.call( new Date() ));
+        console.log(Object.prototype.toString.call( Array ));
+        console.log(Object.prototype.toString.call( Date ));
+
+        // 简写 ==> 因为{}对象直接继承Object.prototype，
+        // 所以通过这个对象得到的toString，一定来自Object.prototype。
+        console.log(({}).toString.call([]));
+        console.log(({}).toString.call( new Date() ));
+        console.log(({}).toString.call( Array ));
+        console.log(({}).toString.call( Date ));
+
+        // 用这个toString获取自定义对象的类型
+        function Person(){}
+        var xiaofang = new Person();
+        console.log(({}).toString.call( xiaofang ));
+
+
+
+
+        // 字符串 ==> String.prototype.toString
+        var a="ddd";
+        console.log(a.toString());
+        var e= new String();
+        console.log(e.toString());
+        var e= new String('string');
+        console.log(e.toString());
+
+        // 数组 ==> Array.prototype.toString
+        var b=[1,2,3,4,5,6];
+        console.log(b.toString());
+        var b=[];
+        console.log(b.toString());
+        var d=new Array();
+        console.log(d.toString());
+
+        // 对象  ==> Object.prototype.toString
+        var c={};
+        console.log(c.toString());
+
+        // 函数 ==> Function.prototype.toString
+        console.log(Function.toString());
+        console.log(Array.toString());
+        console.log(RegExp.toString());
+        function fn() {
+            console.log('我写的');
+        }
+        console.log(fn.toString());
+
+    </script>
+</body>
+</html>

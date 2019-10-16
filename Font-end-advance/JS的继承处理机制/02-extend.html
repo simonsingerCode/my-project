@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JS中的继承</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+  /**
+   * 继承：子类继承父类中的属性和方法。目的：让子类的实例调取父类中的属性和方法
+   *
+  */
+
+  function A(x){
+    this.x = x;
+  }
+  A.prototype.getX = function(){
+    console.log(this.x);
+  };
+
+  function B(y){
+    this.y = y;
+  }
+  B.prototype = new A(200);
+  B.prototype.constructor = B;
+  B.prototype.getY = function(){
+    console.log(this.y);
+  };
+
+  var b1 = new B(100);
+  console.log(b1.y);
+  b1.getY();
+
+  //
+
+</script>
