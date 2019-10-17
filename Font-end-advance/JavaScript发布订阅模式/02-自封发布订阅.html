@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>自己封装的发布订阅</title>
+</head>
+<body>
+  <button id="btn">点击</button>
+</body>
+</html>
+<script src="./02-subscribe.js"></script>
+<script>
+  // let pond = subscribe();
+  // let btn = document.getElementById('btn');
+  // btn.onclick = function (ev){
+  //   pond.fire(ev);
+  // };
+
+  // let fn1 = function(){
+  //   console.log(1);
+  // }
+  // let fn2 = function(){
+  //   console.log(2);
+  // }
+  // let fn3 = function(){
+  //   console.log(3);
+  // }
+  // let fn4 = function(ev){
+  //   console.log(4);
+  //   console.log(ev);
+  // }
+  // pond.add(fn1);
+  // pond.add(fn1);
+  // pond.add(fn2);
+  // pond.add(fn3);
+  // pond.add(fn4);
+</script>
+
+<script>
+  let pond = subscribe();
+  let btn = document.getElementById('btn');
+  btn.onclick = function (ev){
+    pond.fire(ev);
+  };
+
+  let fn1 = function(){
+    console.log(1);
+  }
+  let fn2 = function(){
+    console.log(2);
+    pond.remove(fn1)
+  }
+  let fn3 = function(){
+    console.log(3);
+  }
+  let fn4 = function(){
+    console.log(4);
+  }
+  pond.add(fn1);
+  pond.add(fn2);
+  pond.add(fn3);
+  pond.add(fn4);
+</script>

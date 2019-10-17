@@ -8,6 +8,38 @@
   <script src="../../libs/jquery_v3.4.1.js"></script>
 </head>
 <body>
-
+  <button class="submit">点击</button>
 </body>
 </html>
+<script>
+  let fn1 = function(){
+    console.log(1);
+  };
+  let fn2 = function(){
+    console.log(2);
+  };
+  let fn3 = function(){
+    console.log(3);
+    console.log(arguments);
+  };
+  let fn4 = function(){
+    console.log(4);
+  };
+
+  // 1. 创建一个事件池 $.Callbacks()
+  let $pond1 = $.Callbacks();
+  $('.submit').click(()=>{
+    // => 点击的时候，通知事件池中的方法执行,而且还可以给每个方法都传递实参
+    $pond1.fire(100,200);
+  });
+
+  // => 把需要做的事情陆续添加到事件池中 $pond.add(func) / $pond.remove(func)
+  $pond1.add(fn1);
+  // $pond1.add(fn1); // => jquery 中没有做去重
+  $pond1.add(fn2);
+  $pond1.add(fn3);
+  $pond1.add(fn4);
+  $pond1.remove(fn2);
+  // $pond1.add(fn2);
+
+</script>

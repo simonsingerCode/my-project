@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>练习好帮手</title>
+</head>
+<body>
+  <button id="btn">点击事件</button>
+</body>
+</html>
+<script src="./06-exercise.js"></script>
+<script>
+  let btn = document.getElementById('btn');
+  let pond = subscribe();
+  btn.onclick=function(){
+    pond.fire();
+  }
+
+  function fn1 (){
+    console.log(1);
+    pond.remove(fn4);
+  }
+  function fn2 (){
+    console.log(2);
+  }
+  function fn3 (){
+    console.log(3);
+  }
+  function fn4 (){
+    console.log(4);
+  }
+
+  pond.add(fn1);
+  pond.add(fn2);
+  pond.add(fn3);
+  pond.add(fn4);
+</script>
